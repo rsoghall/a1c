@@ -8,7 +8,8 @@ class App extends Component {
     super();
     this.state = {
       result: [],
-      BG: ''
+      BG: '',
+      A1c: 0
     }
   }
   
@@ -24,7 +25,10 @@ class App extends Component {
   }
 
   handleAddBG(){
-    
+    let A1c=(46.7 + +this.state.BG)/28.7
+    this.setState({
+      A1c: A1c
+    })
   }
 
 
@@ -32,11 +36,12 @@ class App extends Component {
     return (
       <div className="App">
       <div>
-        <input onChange = {(e) => this.handleInputBG(e.target.val)}
-        value={this.state.result}
+        <input onChange = {(e) => this.handleInputBG(e.target.value)}
+        value={this.state.BG}
         placeholder={'Add BG'}></input>
-        <button OnClick={() =>this.handleAddBG()}>Get A1c</button>
+        <button onClick={() =>this.handleAddBG()}>Get A1c</button>
       </div>
+      {this.state.A1c}
       {/* <h1>Input BG</h1>
       <p>Calculate A1c from GB Input</p> */}
       
