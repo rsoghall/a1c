@@ -14,10 +14,10 @@ class App extends Component {
     }
   }
   
-  // //Example
-  // // componentDidMount (){
-  // //   axios.get ('/api/a1c')
-  // //   .then(res => console.log(res))
+  
+  componentDidMount (){
+  document.title = "A1c App Project"
+  }
 
   handleInputBG(value){
     this.setState({
@@ -59,7 +59,7 @@ class App extends Component {
       A1c: null
     })
   }
-    handleGettingResults (){
+    handleGetBG(){
       axios.get('/api/result')
         .then(response => {
           console.log(' get data', response)
@@ -69,26 +69,58 @@ class App extends Component {
           })
         })
     }
+    //handleDeleteMessages
+    handleEditBG(){
+      axios.put(`/api/result`)
+      .then((response)=>{
+        this.setState({
+          result: response.data
+        })
+      })
+    }
+
+    handleDeleteBG(){
+      axios.delete(`/api/result`)
+      .then((response)=>{
+        this.setState({
+          result: response.data
+        })
+      })
+    }
+    
 
 
   render() {
-    const mappedResults =this.state.result.map((eachResultsObj) => {
+    //   const mappedResults =this.state.result.map((eachResultsObj) => {
+    //   return (
+    //     <CalcResults key={eachResultsObj.index} result={eachResultsObj}/>
+    //   )
+    // })
+
+    const mappedResults =this.state.result.map((eachResultsObj, index) => {
+      console.log(eachResultsObj)
+      console.log(index)
       return (
-        <CalcResults key={eachResultsObj.index} result={eachResultsObj}/>
+        <CalcResults key={index} result={eachResultsObj}/>
       )
     })
+
     return (
       <div className="App">
+      
       
         <div>
           <input onChange = {(e) => this.handleInputBG(e.target.value)}
           value={this.state.BG}
           placeholder={'Add BG'}/>
-          <button onClick={() =>this.handleAddBG()}>Get A1c</button>
-          <button onClick={() => this.handleGettingResults()}>Get Results</button>
+          <button onClick={() => this.handleAddBG()}>Get A1c</button>
+          <button onClick={() => this.handleGetBG()}>Get Results</button>
+          <button onClick={() => this.handleEditBG()}>Edit</button>
+          <button onClick={() => this.handleDeleteBG()}>Delele</button>
         </div>
         {this.state.A1c}
         {mappedResults}
+        
       </div>
     );
   }
