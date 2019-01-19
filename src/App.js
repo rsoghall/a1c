@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-// import axios from 'axios'
 import './App.css';
-// import CalcResults from './Components/CalcResults'
+import CalcResults from './Components/CalcResults'
+import axios from 'axios';
 
 class App extends Component {
   constructor () {
@@ -9,7 +9,7 @@ class App extends Component {
     this.state = {
       result: [],
       BG: '',
-      A1c: 0
+      A1c: null
     }
   }
   
@@ -29,10 +29,42 @@ class App extends Component {
     this.setState({
       A1c: A1c
     })
+    let bodyObj ={
+      BG: this.state.BG,
+      A1c: A1c
+    }
+    axios.post('/api/result', bodyObj)
+    .then(response => {
+      
+      console.log('post data', response);
+
+    this.setState({
+        result: response.data
+    })
+  })
+    this.setState({
+      BG: '',
+      A1c: null
+    })
   }
+    handleGettingResults (){
+      axios.get('/api/result')
+        .then(response => {
+          console.log(' get data', response)
+
+          this.setState({
+            result: response.data
+          })
+        })
+    }
 
 
   render() {
+    const mappedResults =this.state.result.map((eachResultsObj) => {
+      return (
+        <CalcResults key={eachResultsObj.index} result={eachResultsObj}/>
+      )
+    })
     return (
       <div className="App">
       <div>
@@ -44,7 +76,7 @@ class App extends Component {
       {this.state.A1c}
       {/* <h1>Input BG</h1>
       <p>Calculate A1c from GB Input</p> */}
-      
+      {mappedResults}
       </div>
     );
   }
