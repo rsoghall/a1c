@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import CalcResults from './Components/CalcResults'
 import axios from 'axios';
-
+// import Input from './input'
 
 class App extends Component {
   constructor () {
@@ -11,14 +11,13 @@ class App extends Component {
       result: [],
       BG: '',
       A1c: null
-    }
+    };    
     this.handleDeleteBG = this.handleDeleteBG.bind(this);
-    this.handleEditBG = this.handleEditBG.bind(this);
   }
   
   
   componentDidMount (){
-  document.title = "A1c App Project"
+    document.title = "A1c App Project"
   }
 
   handleInputBG(value){
@@ -27,7 +26,7 @@ class App extends Component {
     })
   }
 
- handleAddBG(){
+  handleAddBG(){
     let A1c=(46.7 + +this.state.BG)/28.7
     this.setState({
       A1c: A1c
@@ -51,36 +50,36 @@ class App extends Component {
     })
   }
 
-    handleGetBG(){
-      axios.get('/api/result')
-        .then(response => {
-          console.log(' get data', response)
+  handleGetBG(){
+    axios.get('/api/result')
+      .then(response => {
+        console.log(' get data', response)
 
-          this.setState({
-            result: response.data
-          })
-        })
-    }
-    
-    handleEditBG(){
-      axios.put(`/api/result`)
-      .then((response)=>{
         this.setState({
           result: response.data
         })
       })
-    }
+  }
 
-    handleDeleteBG(i){
-      console.log('DeleteBG :: ' + this.state.result)
-      axios.delete(`/api/result`+i)
-      .then((response)=>{
-        this.setState({
-          result: response.data
-        })
+  handleEditBG(){
+    axios.put(`/api/result`)
+    .then((response)=>{
+      this.setState({
+        result: response.data
       })
-    }
-    
+    })
+  }
+
+  handleDeleteBG(i){
+    console.log("jkanskjdnkajsdnkjansdkjanskjdnasd :: " + this.state.result)
+    axios.delete('/api/result/'+i)
+    .then((response)=>{
+      this.setState({
+        result: response.data
+      })
+    })
+  }
+  
 
 
   render() {
@@ -90,9 +89,9 @@ class App extends Component {
     //   )
     // })
 
-    const mappedResults =this.state.result.map((eachResultsObj, index) => {
+    const mappedResults = this.state.result.map((eachResultsObj, index) => {
       return (
-        <CalcResults key={index} result={eachResultsObj}/>
+        <CalcResults key={index} result={eachResultsObj} onDeleteClick={() => this.handleDeleteBG(index)}/>
       )
     })
 
@@ -105,8 +104,9 @@ class App extends Component {
           value={this.state.BG}
           placeholder={'Add BG'}/>
           <button onClick={() => this.handleAddBG()}>Get A1c</button>
-          {/* <button onClick={() => this.handleGetBG()}>Get Results</button> */}
-      </div>
+          <button onClick={() => this.handleGetBG()}>Get Results</button>
+          <button onClick={() => this.handleEditBG()}>Edit</button>
+        </div>
         {this.state.A1c}
         {mappedResults}
         
@@ -115,4 +115,5 @@ class App extends Component {
   }
 }
 
-export default App;
+// export default App;
+

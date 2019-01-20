@@ -1,6 +1,6 @@
 let arrayBG = [
     {
-        BG: 120,
+        BG: 10,
         A1c: 5.8,
         index: 0
     }
@@ -16,7 +16,7 @@ module.exports = {
         res.status(200).send(arrayBG)
     },
     addBG: (req, res) => {
-        const index= arrayBG[arrayBG.length-1].index+1
+        const index = arrayBG.length
 
         const newBG = {
             BG: req.body.BG,
@@ -43,15 +43,11 @@ module.exports = {
         res.status(200).send(arrayBG)
     },
     deleteBG: (req, res) => {
-        console.log('req id :: ' + req.params.id);
+        console.log("req id :: " + req.params.id);
         // const deleteID = req.params.id;
         // bgIndex=arrayBG.findIndex(bg => bg.id == deleteID);
-        arrayBG.splice(bgIndex, 1)
+        arrayBG.splice(req.params.id, 1)
         res.status(200).send(arrayBG)
-
     }
-    
-
-
 
 }
