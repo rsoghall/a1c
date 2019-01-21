@@ -31,7 +31,7 @@ module.exports = {
         const updateID = req.params.id;
         let bg=arrayBG(req.params.id)
 
-        arrayBG[bgIndex]={
+        arrayBG[updateID]={
             BG: req.body.BG,
             A1c: req.body.A1c,
             index: index
@@ -40,7 +40,7 @@ module.exports = {
     },
     deleteBG: (req, res) => {
         console.log('req id :: ' + req.params.id);
-        arrayBG.splice(bgIndex, 1)
+        arrayBG.splice(req.params.id, 1)
         res.status(200).send(arrayBG)
 
     }

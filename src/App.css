@@ -32,11 +32,17 @@ input::placeholder {color: black; background-color: white}
 button {
     background-color: white;
 }
-
 /* .box {
-    color: white;
-    height: 100px;
+    margin-left: 0px;
+    height: 100%;
     width: 100px;
+    border: 2px solid black;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: none;
+    align-content: stretch;
+    justify-content: flex-start;
+    align-items: flex-start;
   } */
 
 

@@ -75,7 +75,7 @@ class App extends Component {
 
     handleDeleteBG(i){
       console.log('DeleteBG :: ' + this.state.result)
-      axios.delete(`/api/result`+i)
+      axios.delete(`/api/result/`+i)
       .then((response)=>{
         this.setState({
           result: response.data
@@ -88,13 +88,19 @@ class App extends Component {
   render() {
     const mappedResults =this.state.result.map((eachResultsObj, index) => {
       return (
-        <CalcResults key={index} result={eachResultsObj} onDeleteClick={() => this.handleDeleteBG(index)}/>
+        <CalcResults key={index} result={eachResultsObj} onDeleteClick={(i) => this.handleDeleteBG(index) }/>        
       )
+        // *** How do I add the this this.handleEditBG here so it will pull from CalcResults: <button onClick={props.onEditClick}>Edit</button>
+        
+      // const mappedResults =this.state.result.map((eachResultsObj, index) => {
+      //   return (
+      //     <CalcResults key={index} result={eachResultsObj} onEditClick={() => this.handleEditBG(index)}/>        
+      //   )
     })
 
     return (
       <div className="App">
-    <div className="box"></div>
+           
       
       
         <div>
@@ -102,12 +108,13 @@ class App extends Component {
           value={this.state.BG}
           placeholder={'Add BG'}/>
           <button onClick={() => this.handleAddBG()}>Get A1c</button>
-          {/* <button onClick={() => this.handleGetBG()}>Get Results</button> */}
+          {/* <div className="box">THis is a test</div> */}
       </div>
         {this.state.A1c}
         {mappedResults}
         
       </div>
+      
     );
     
   }
