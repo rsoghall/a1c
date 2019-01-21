@@ -29,12 +29,13 @@ class App extends Component {
 
  handleAddBG(){
     let A1c=(46.7 + +this.state.BG)/28.7
+    
     this.setState({
       A1c: A1c
     })
     let bodyObj ={
       BG: this.state.BG,
-      A1c: A1c
+      A1c: A1c.toFixed(1)
     }
     axios.post('/api/result', bodyObj)
     .then(response => {
@@ -62,8 +63,9 @@ class App extends Component {
         })
     }
     
-    handleEditBG(){
-      axios.put(`/api/result`)
+    handleEditBG(i){
+      console.log('EditBG :: ' + this.state.result)
+      axios.put(`/api/result`+i)
       .then((response)=>{
         this.setState({
           result: response.data
@@ -84,20 +86,15 @@ class App extends Component {
 
 
   render() {
-    //   const mappedResults =this.state.result.map((eachResultsObj) => {
-    //   return (
-    //     <CalcResults key={eachResultsObj.index} result={eachResultsObj}/>
-    //   )
-    // })
-
     const mappedResults =this.state.result.map((eachResultsObj, index) => {
       return (
-        <CalcResults key={index} result={eachResultsObj}/>
+        <CalcResults key={index} result={eachResultsObj} onDeleteClick={() => this.handleDeleteBG(index)}/>
       )
     })
 
     return (
       <div className="App">
+    <div className="box"></div>
       
       
         <div>
@@ -112,6 +109,7 @@ class App extends Component {
         
       </div>
     );
+    
   }
 }
 

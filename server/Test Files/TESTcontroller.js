@@ -1,6 +1,6 @@
 let arrayBG = [
     {
-        BG: 10,
+        BG: 0,
         A1c: 5.8,
         index: 0
     }

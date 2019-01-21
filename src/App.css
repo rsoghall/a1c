@@ -1,18 +1,43 @@
 * {
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-size: 20px;
-    color: rgb(83, 123, 197);
+    background-color: #3596c7;    
+    color: black;
     text-align: center;
     box-sizing: border-box;
-    }
+    } 
 
-div {
-    background-color: rgb(207, 192, 192);
-    /* background-image: url(images/otter.jpg); */
-    background-position: center;
-    background-size: cover;
-    height: 125px;
-    width: 300px;
-    color: blue;
-    float: none;
+.calcWrapper {
+
+    border: 1px solid black;
+    margin: 25px;
+    padding: 5px;
+
 }
+.App {
+    
+    margin-left: 30vw;
+    margin-top: 5vh;
+    height: 500px;
+    width: 500px;
+    /* border: 2px solid black; */
+    display: flex;
+    flex-direction: column;
+    flex-wrap: none;
+    align-content: stretch;
+    justify-content: flex-start;
+    align-items: flex-center;
+}
+input::placeholder {color: black; background-color: white}
+button {
+    background-color: white;
+}
+
+/* .box {
+    color: white;
+    height: 100px;
+    width: 100px;
+  } */
+
+
+ 
