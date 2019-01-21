@@ -29,12 +29,12 @@ module.exports = {
     editBG: (req, res) => {
         const {text} = req.body;
         const updateID = req.params.id;
-        let bg=arrayBG(req.params.id)
+        // let bg=arrayBG(req.params.id)
 
         arrayBG[updateID]={
             BG: req.body.BG,
             A1c: req.body.A1c,
-            index: index
+            index: req.params.id
                     };
         res.status(200).send(arrayBG)
     },

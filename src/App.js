@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import CalcResults from './Components/CalcResults'
 import axios from 'axios';
-
+import image1 from'./images/a1c.jpg'
 
 class App extends Component {
   constructor () {
@@ -14,6 +14,7 @@ class App extends Component {
     }
     this.handleDeleteBG = this.handleDeleteBG.bind(this);
     this.handleEditBG = this.handleEditBG.bind(this);
+    this.handleInputBG = this.handleInputBG.bind(this);
   }
   
   
@@ -64,8 +65,17 @@ class App extends Component {
     }
     
     handleEditBG(i){
+      let A1c=(46.7 + +this.state.BG)/28.7
+    
+    this.setState({
+      A1c: A1c
+    })
+      let updateObj ={
+        BG: this.state.BG,
+        A1c: A1c.toFixed(1)
+      }
       console.log('EditBG :: ' + this.state.result)
-      axios.put(`/api/result`+i)
+      axios.put(`/api/result/`+i, updateObj)
       .then((response)=>{
         this.setState({
           result: response.data
@@ -88,17 +98,21 @@ class App extends Component {
   render() {
     const mappedResults =this.state.result.map((eachResultsObj, index) => {
       return (
-        <CalcResults key={index} result={eachResultsObj} onDeleteClick={(i) => this.handleDeleteBG(index) }/>        
+        <CalcResults key={index} result={eachResultsObj} onDeleteClick={(i) => this.handleDeleteBG(index)}
+        onEditClick={(i) => this.handleEditBG(index)}
+        updateBGClick={this.handleInputBG}/>
+              
       )
-        // *** How do I add the this this.handleEditBG here so it will pull from CalcResults: <button onClick={props.onEditClick}>Edit</button>
-        
-      // const mappedResults =this.state.result.map((eachResultsObj, index) => {
-      //   return (
-      //     <CalcResults key={index} result={eachResultsObj} onEditClick={() => this.handleEditBG(index)}/>        
-      //   )
     })
 
     return (
+      <div className="box">
+      <div>
+      <img src={image1} alt="A1c"/>
+      {/* <img src="https://glucosetracker-assets.s3.amazonaws.com/media/editor-uploads/a1c.jpg" alt="A1c2"/> */}
+      </div>
+      
+  
       <div className="App">
            
       
@@ -108,13 +122,13 @@ class App extends Component {
           value={this.state.BG}
           placeholder={'Add BG'}/>
           <button onClick={() => this.handleAddBG()}>Get A1c</button>
-          {/* <div className="box">THis is a test</div> */}
+          
       </div>
         {this.state.A1c}
         {mappedResults}
         
       </div>
-      
+      </div>
     );
     
   }

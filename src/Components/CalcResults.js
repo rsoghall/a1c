@@ -7,7 +7,7 @@ const CalcResults = (props) => {
             <h1>A1c: {props.result.A1c}</h1>
             <button onClick={props.onDeleteClick}>Delele</button>
             <button onClick={props.onEditClick}>Edit</button>
-
+            <input onChange={(e)=> props.updateBGClick(e.target.value)}/>
 
         </div>
     )
